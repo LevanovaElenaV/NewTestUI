@@ -1,3 +1,4 @@
+// урок 5 для Git
 package lesson5;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -48,21 +49,28 @@ public class VelozonaTest {
         driver.findElement(By.xpath("//input[@name=\"subject\"]")).sendKeys(subjectText);
         driver.findElement(By.xpath("//textarea[@name=\"message\"]")).sendKeys("Новое автоматически созданное тестовое сообщение");
         driver.findElement(By.xpath("//input[@value=\"Отправить...\"]")).click();
+        Thread.sleep(3000);
 
         // Возвращаемся в список
         driver.findElement(By.linkText("Покатушки - велотуризм")).click();
+        Thread.sleep(3000);
 
         // Находим и удаляем только что созданное сообщение
-        String xpathText = "//a[text()=\"" + subjectText + "\"]";
+        String xpathText = "//a[text()='" + subjectText + "']";
         driver.findElement(By.xpath(xpathText)).click();
 
-        // тут вылезет нативное окно, закроем
+        // Проверяем, что тема в форме редактирования сообщения верная )
+        xpathText = "//h3[text()='" + subjectText + "']";
+        Assertions.assertEquals(subjectText, driver.findElement(By.xpath(xpathText)).getText());
+
         String xpathText1 = "//a[text()=" + "\"Редактировать\"]";
         driver.findElement(By.xpath(xpathText1)).click();
+
+        // тут вылезет нативное окно, закроем
         driver.findElement(By.xpath("//input[@value='Удалить сообщение']")).click();
         driver.switchTo().alert().accept();
 
-        Thread.sleep(2000);
+        Thread.sleep(3000);
     }
 
     @AfterEach
