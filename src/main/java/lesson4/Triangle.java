@@ -51,7 +51,7 @@ public class Triangle {
     public double getArea() {
         double p= (a+b+c)/2;
         double s = Math.sqrt(p*(p-a)*(p-b)*(p-c));
-//        System.out.println("Площадь треугольника равна " + s);
+//      System.out.println("Площадь треугольника равна " + s);
         return s;
     }
 
