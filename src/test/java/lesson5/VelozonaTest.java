@@ -1,4 +1,4 @@
-// урок 5 для Git
+// Выполнено задание к уроку 5
 package lesson5;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
