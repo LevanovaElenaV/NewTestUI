@@ -8,10 +8,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
+//import java.util.List;
 import java.util.Random;
 
 
@@ -46,14 +47,13 @@ public class VelozonaTest {
         //Добавление сообщения
         driver.findElement(By.linkText("Добавить новое сообщение")).click();
         String subjectText = "Новая тема " + new Random().nextInt(1000);
-        driver.findElement(By.xpath("//input[@name=\"subject\"]")).sendKeys(subjectText);
-        driver.findElement(By.xpath("//textarea[@name=\"message\"]")).sendKeys("Новое автоматически созданное тестовое сообщение");
-        driver.findElement(By.xpath("//input[@value=\"Отправить...\"]")).click();
-        Thread.sleep(3000);
+        driver.findElement(By.xpath("//input[@name='subject']")).sendKeys(subjectText);
+        driver.findElement(By.xpath("//textarea[@name='message']")).sendKeys("Новое автоматически созданное тестовое сообщение");
+        driver.findElement(By.xpath("//input[@value='Отправить...']")).click();
 
         // Возвращаемся в список
         driver.findElement(By.linkText("Покатушки - велотуризм")).click();
-        Thread.sleep(3000);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//table[@class='tblinfo'] ")));
 
         // Находим и удаляем только что созданное сообщение
         String xpathText = "//a[text()='" + subjectText + "']";
@@ -63,14 +63,18 @@ public class VelozonaTest {
         xpathText = "//h3[text()='" + subjectText + "']";
         Assertions.assertEquals(subjectText, driver.findElement(By.xpath(xpathText)).getText());
 
-        String xpathText1 = "//a[text()=" + "\"Редактировать\"]";
+        String xpathText1 = "//a[text()=" + "'Редактировать']";
         driver.findElement(By.xpath(xpathText1)).click();
 
         // тут вылезет нативное окно, закроем
         driver.findElement(By.xpath("//input[@value='Удалить сообщение']")).click();
+        webDriverWait.until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
 
-        Thread.sleep(3000);
+        // Возвращаемся в список
+        driver.findElement(By.linkText("Покатушки - велотуризм")).click();
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//table[@class='tblinfo'] ")));
+
     }
 
     @AfterEach
